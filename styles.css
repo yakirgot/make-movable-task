@@ -1,0 +1,28 @@
+body {
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+  color: #333;
+  user-select: none;
+}
+
+ul {
+  border-top: 2px dotted;
+}
+
+li {
+  font-size: 24px;
+  cursor: grab;
+  width: 200px;
+  background: lightblue;
+  margin: 4px;
+  padding: 4px;
+}
+
+li:active {
+  cursor: grabbing;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+#testbox {
+  border: 1px dashed;
+}
