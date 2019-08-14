@@ -16,11 +16,13 @@ li {
   background: lightblue;
   margin: 4px;
   padding: 4px;
+  position: relative;
 }
 
 li:active {
   cursor: grabbing;
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  z-index: 2;
 }
 
 #testbox {

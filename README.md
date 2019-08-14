@@ -1,4 +1,4 @@
-# Make-movable-task
+# Make Movable Task
 
 You are implementing makeMoveable(element) function, takes a dom element and make it movable by dragging with the mouse, markup and css are ready, only JS is needed
 
