@@ -11,7 +11,7 @@
       const leftGapInElement = mouseDownEvent.clientX - elementCoordinates.left;
       const topGapInElement = mouseDownEvent.clientY - elementCoordinates.top;
 
-      document.onmousemove = (mouseMoveEvent) => {
+      document.onmousemove = (mouseMoveEvent) =>
         requestAnimationFrame(() => {
           const coordinates = { x: 0, y: 0 };
 
@@ -27,7 +27,6 @@
 
           element.style.transform = `translate(${coordinates.x}px, ${coordinates.y}px)`;
         });
-      };
 
       document.onmouseup = () => {
         document.onmousemove = null;
