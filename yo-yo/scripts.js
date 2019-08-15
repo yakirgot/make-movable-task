@@ -5,10 +5,8 @@
         return;
       }
 
-      // prevents dragging while element movement
-      if (getTranslateValues(element)) {
-        return;
-      }
+      element.style.transition = null;
+      element.style.transform = null;
 
       const elementBoundingClientRect = element.getBoundingClientRect();
 
@@ -24,81 +22,20 @@
             y: mouseMoveEvent.clientY - elementBoundingClientRect.top - mousePositionInElement.top,
           };
 
-          element.style.transform = `translate(${elementNewPosition.x}px, ${elementNewPosition.y}px)`;
+          element.style.transform = `matrix(1.2, 0, 0, 1.2, ${elementNewPosition.x}, ${elementNewPosition.y})`;
         });
       };
 
       document.onmouseup = () => {
-        moveElementToPreviousPosition(element);
-
         document.onmousemove = null;
         document.onmouseup = null;
+
+        requestAnimationFrame(() => {
+          element.style.transition = '0.75s';
+          element.style.transform = `matrix(1, 0, 0, 1, 0, 0)`;
+        });
       };
     });
-  }
-
-  function moveElementToPreviousPosition(element) {
-    const translateValues = getTranslateValues(element);
-
-    if (translateValues.x === 0 && translateValues.y === 0) {
-      element.style.transform = null;
-
-      return;
-    }
-
-    if (translateValues.x !== 0) {
-      translateValues.x = getStepCloserToZero(translateValues.x);
-    }
-
-    if (translateValues.y !== 0) {
-      translateValues.y = getStepCloserToZero(translateValues.y);
-    }
-
-    requestAnimationFrame(() => {
-      element.style.transform = `translate(${translateValues.x}px, ${translateValues.y}px)`;
-
-      moveElementToPreviousPosition(element);
-    });
-  }
-
-  function getStepCloserToZero(position) {
-    let stepSize = 1;
-    const positionDistance = Math.abs(position);
-
-    if (positionDistance > 500) {
-      stepSize = 12;
-    } else if (positionDistance > 300) {
-      stepSize = 8;
-    } else if (positionDistance > 50) {
-      stepSize = 5;
-    }
-
-    if (position > stepSize) {
-      return position - stepSize;
-    }
-
-    if (position < -stepSize) {
-      return position + stepSize;
-    }
-
-    return 0;
-  }
-
-  function getTranslateValues(element) {
-    const transformValue = getComputedStyle(element).getPropertyValue('transform');
-
-    if (transformValue === 'none') {
-      return null;
-    }
-
-    const matrixArray = transformValue.split(', ');
-
-    const translateValues = {
-      x: Number(matrixArray[4]),
-      y: Number(matrixArray[5].slice(0, -1)),
-    };
-
-    return translateValues;
   }
 
   document.querySelectorAll('li').forEach(makeMoveable);
