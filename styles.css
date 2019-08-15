@@ -5,6 +5,16 @@ body {
   user-select: none;
 }
 
+a {
+  color: #2196f3;
+  text-decoration: none;
+  transition: 0.15s;
+}
+
+a:hover {
+  color: #1976d2;
+}
+
 ul {
   border-top: 2px dotted;
 }
