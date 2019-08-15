@@ -8,5 +8,6 @@
   },
   "singleQuote": true,
   "trailingComma": "all",
-  "arrowParens": "always"
+  "arrowParens": "always",
+  "printWidth": 120
 }
