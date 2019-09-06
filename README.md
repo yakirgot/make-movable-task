@@ -1,6 +1,6 @@
 # Make Movable Task
 
-Run by installing dependencies with `yarn`, and then `npx live-server`
+Run by installing dependencies with `npm install`, and then `npx live-server`
 
 You are implementing makeMoveable(element) function, takes a dom element and make it movable by dragging with the mouse, markup and css are ready, only JS is needed
 
