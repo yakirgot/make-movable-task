@@ -1,3 +1,5 @@
+'use strict';
+
 (() => {
   function makeMoveable(element) {
     element.addEventListener('mousedown', (mouseDownEvent) => {
@@ -13,11 +15,17 @@
         top: mouseDownEvent.clientY - elementBoundingClientRect.top,
       };
 
-      document.onmousemove = (mouseMoveEvent) => {
+      const mouseMoveListener = (mouseMoveEvent) => {
         requestAnimationFrame(() => {
           const elementNewPosition = {
-            x: mouseMoveEvent.clientX - elementBoundingClientRect.left - mousePositionInElement.left,
-            y: mouseMoveEvent.clientY - elementBoundingClientRect.top - mousePositionInElement.top,
+            x:
+              mouseMoveEvent.clientX -
+              elementBoundingClientRect.left -
+              mousePositionInElement.left,
+            y:
+              mouseMoveEvent.clientY -
+              elementBoundingClientRect.top -
+              mousePositionInElement.top,
           };
 
           if (translateValues) {
@@ -29,25 +37,29 @@
         });
       };
 
-      document.onmouseup = () => {
-        document.onmousemove = null;
-        document.onmouseup = null;
+      const mouseUpListener = () => {
+        document.removeEventListener('mousemove', mouseMoveListener);
       };
+
+      document.addEventListener('mousemove', mouseMoveListener);
+      document.addEventListener('mouseup', mouseUpListener, { once: true });
     });
-  }
 
-  function getTranslateValues(element) {
-    const transformValue = getComputedStyle(element).getPropertyValue('transform');
+    function getTranslateValues(element) {
+      const transformValue = getComputedStyle(element).getPropertyValue(
+        'transform',
+      );
 
-    if (transformValue !== 'none') {
-      const matrixArray = transformValue.split(', ');
+      if (transformValue !== 'none') {
+        const matrixArray = transformValue.split(', ');
 
-      const translateValues = {
-        x: Number(matrixArray[4]),
-        y: Number(matrixArray[5].slice(0, -1)),
-      };
+        const translateValues = {
+          x: Number(matrixArray[4]),
+          y: Number(matrixArray[5].slice(0, -1)),
+        };
 
-      return translateValues;
+        return translateValues;
+      }
     }
   }
 
